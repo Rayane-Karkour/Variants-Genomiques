@@ -1,4 +1,5 @@
 venv/
 gitpushing.sh
 __pycache__/
-/data/
+data/clinvar.vcf
+data/pathogenic_variants.csv
