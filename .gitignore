@@ -1,2 +1,4 @@
 venv/
 gitpushing.sh
+__pycache__/
+/data/
