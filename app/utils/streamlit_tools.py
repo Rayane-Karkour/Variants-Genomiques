@@ -2,10 +2,10 @@ import pandas as pd
 import streamlit as st
 import os
 
-DATA_PATH = "../data/pathogenic_variants.csv"
+DATA_PATH = "data/pathogenic_variants.csv"
 
 @st.cache_data  # Put in cache to avoid reloading
-def load_data() -> pd.DataFrame:
+def load_data():
     # print(f"Current path: {os.getcwd()}")
     if not os.path.exists(DATA_PATH):
         st.error(f"Fichier introuvable: {DATA_PATH}.")

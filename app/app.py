@@ -9,6 +9,7 @@ st.set_page_config(
     page_title="Explorateur de Variants Génomiques",
     layout="wide",
     initial_sidebar_state="expanded",
+    page_icon="logo.png"
 )
 
 df = load_data()
