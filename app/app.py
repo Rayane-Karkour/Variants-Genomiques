@@ -8,7 +8,7 @@ st.set_page_config(
     page_title="Explorateur de Variants Génomiques",
     layout="wide",
     initial_sidebar_state="expanded",
-    # page_icon="logo.png"
+    page_icon="logo.png"
 )
 
 with st.spinner("Chargement des données..."):
