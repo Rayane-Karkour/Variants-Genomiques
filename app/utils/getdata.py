@@ -1,33 +1,37 @@
-import requests
+import pandas as pd
+import streamlit as st
 import os
-import gzip
-import shutil
-import os
+from huggingface_hub import hf_hub_download
+
+DATA_PATH = "data/pathogenic_variants.parquet"
+HF_REPO_ID = "Rayane-K/Variants-Genomiques"
+HF_FILENAME = "pathogenic_variants.parquet"
+
+@st.cache_data(show_spinner=False)  # Put in cache to avoid reloading
+def load_data():
+    # print(f"Current path: {os.getcwd()}")
+    # Since Streamlit cannot directly read from LST data in git repo, we download from Hugging Face
+    if not os.path.exists(DATA_PATH) or os.path.getsize(DATA_PATH) < 100000:
+        os.makedirs("data", exist_ok=True)
+        hf_hub_download(
+            repo_id=HF_REPO_ID,
+            filename=HF_FILENAME,
+            repo_type="dataset",
+            local_dir="data"
+        )
 
 
-URL = "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz"
-OUTPUT = "data/clinvar.vcf.gz"
+    cols = ["GENEINFO", "CHROM", "CLNSIG", "CLNVC", "CLNDN"]
+    df = pd.read_parquet(DATA_PATH, columns=cols)
 
-def download_clinvar():
-    data_folder = "data/"
-    gz_file  = os.path.join(data_folder, "clinvar.vcf.gz")
-    output_file = os.path.join(data_folder, "clinvar.vcf")
+    # Extract the gene name GENEINFO > "OR4F5:79501" > "OR4F5"
+    df['GENE'] = df['GENEINFO'].str.split(':').str[0]
 
-    print("Downloading...")
-    with requests.get(URL, stream=True) as r:
-        r.raise_for_status()
-        with open(gz_file, "wb") as f:
-            for chunk in r.iter_content():
-                f.write(chunk)
-
-    print("Unzipping...")
-    with gzip.open(gz_file, "rb") as f_in:
-        with open(output_file, "wb") as f_out:
-            shutil.copyfileobj(f_in, f_out)
-
-    os.remove(gz_file)
-
-
-
-if __name__ == "__main__":
-    download_clinvar()
+    # Cleaning
+    df['CHROM'] = df['CHROM'].astype(str)
+    df['GENE']  = df['GENE'].fillna('Unknown')
+    df['CLNSIG'] = df['CLNSIG'].fillna('Unknown')
+    df['CLNVC']  = df['CLNVC'].fillna('Unknown')
+    df['CLNDN']  = df['CLNDN'].fillna('Unknown')
+   
+    return df
