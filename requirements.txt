@@ -1,5 +1,5 @@
 huggingface_hub==1.7.1
-pandas==2.2.3
+pandas==2.3.3
 plotly==6.6.0
-pyarrow==17.0.0
-streamlit==1.43.0
+pyarrow==23.0.1
+streamlit==1.55.0

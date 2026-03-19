@@ -111,6 +111,7 @@ with col_g:
         default=available_chroms,
     )
 
+    
     selected_clnsig = st.multiselect(
         "Signification clinique",
         options=df['CLNSIG'].unique(),
