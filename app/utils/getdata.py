@@ -22,7 +22,7 @@ def load_data():
         )
 
 
-    cols = ["GENEINFO", "CHROM", "CLNSIG", "CLNVC", "CLNDN"]
+    cols = ["GENEINFO", "CHROM", "POS", "REF", "ALT", "CLNSIG", "CLNVC", "CLNDN"]
     df = pd.read_parquet(DATA_PATH, columns=cols)
 
     # Extract the gene name GENEINFO > "OR4F5:79501" > "OR4F5"
