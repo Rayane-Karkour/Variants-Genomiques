@@ -13,7 +13,7 @@ streamlit run ./app/app.py
 ## Accès à l'application
 
 L’application est maintenant disponible en ligne :
-[Accéder à l’application](https://variants-genomiques-cspnvnly8l3t3jjc6gjz3m.streamlit.app/)
+[Accéder à l’application](https://variants-genomiques-jdvh6xxymstnbxtspqirsr.streamlit.app/)
 
 ## Données
 
