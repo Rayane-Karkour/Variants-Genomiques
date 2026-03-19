@@ -7,6 +7,8 @@ DATA_PATH = "data/pathogenic_variants.parquet"
 @st.cache_data  # Put in cache to avoid reloading
 def load_data():
     # print(f"Current path: {os.getcwd()}")
+    st.write("Working dir:", os.getcwd())
+    st.write("Absolute path:", os.path.abspath(DATA_PATH))
     if not os.path.exists(DATA_PATH):
         st.error(f"Fichier introuvable: {DATA_PATH}.")
         st.stop()

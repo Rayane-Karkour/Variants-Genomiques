@@ -2,6 +2,8 @@ import requests
 import os
 import gzip
 import shutil
+import os
+
 
 URL = "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz"
 OUTPUT = "data/clinvar.vcf.gz"

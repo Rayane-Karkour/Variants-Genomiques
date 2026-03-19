@@ -3,7 +3,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from utils.streamlit_tools import load_data
 
-
 ##### Config #####
 st.set_page_config(
     page_title="Explorateur de Variants Génomiques",
@@ -11,6 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     page_icon="logo.png"
 )
+
 
 df = load_data()
 
