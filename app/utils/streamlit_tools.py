@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import os
 
-DATA_PATH = "data/pathogenic_variants.csv"
+DATA_PATH = "data/pathogenic_variants.parquet"
 
 @st.cache_data  # Put in cache to avoid reloading
 def load_data():
@@ -11,7 +11,7 @@ def load_data():
         st.error(f"Fichier introuvable: {DATA_PATH}.")
         st.stop()
 
-    df = pd.read_csv(DATA_PATH)
+    df = pd.read_parquet(DATA_PATH)
 
     # Extract the gene name GENEINFO > "OR4F5:79501" > "OR4F5"
     df['GENE'] = df['GENEINFO'].str.split(':').str[0]
