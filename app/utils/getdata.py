@@ -3,21 +3,22 @@ import streamlit as st
 import os
 from huggingface_hub import hf_hub_download
 
-DATA_PATH = "data/pathogenic_variants.parquet"
+
 HF_REPO_ID = "Rayane-K/Variants-Genomiques"
 HF_FILENAME = "pathogenic_variants.parquet"
+DATA_PATH = f"/tmp/{HF_FILENAME}"  # /tmp is writable in Streamlit Cloud
+# DATA_PATH = "data/pathogenic_variants.parquet" # Local path for development
 
 @st.cache_data(show_spinner=False)  # Put in cache to avoid reloading
 def load_data():
     # print(f"Current path: {os.getcwd()}")
     # Since Streamlit cannot directly read from LST data in git repo, we download from Hugging Face
     if not os.path.exists(DATA_PATH) or os.path.getsize(DATA_PATH) < 100000:
-        os.makedirs("data", exist_ok=True)
         hf_hub_download(
             repo_id=HF_REPO_ID,
             filename=HF_FILENAME,
             repo_type="dataset",
-            local_dir="data"
+            local_dir="tmp"
         )
 
 
