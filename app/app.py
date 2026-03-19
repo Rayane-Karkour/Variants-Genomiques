@@ -11,8 +11,8 @@ st.set_page_config(
     page_icon="logo.png"
 )
 
-
-df = load_data()
+with st.spinner("Chargement des données..."):
+    df = load_data()
 
 ##### Sidebar #####
 with st.sidebar:
