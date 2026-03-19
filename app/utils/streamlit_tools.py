@@ -3,9 +3,10 @@ import streamlit as st
 import os
 from huggingface_hub import hf_hub_download
 
-DATA_PATH = "data/pathogenic_variants.parquet"
 HF_REPO_ID = "Rayane-K/Variants-Genomiques"
 HF_FILENAME = "pathogenic_variants.parquet"
+DATA_PATH = f"/tmp/{HF_FILENAME}" # /tmp is writable in Streamlit Cloud
+# DATA_PATH = "data/pathogenic_variants.parquet"
 
 @st.cache_data(show_spinner=False)  # Put in cache to avoid reloading
 def load_data():
@@ -17,11 +18,12 @@ def load_data():
             repo_id=HF_REPO_ID,
             filename=HF_FILENAME,
             repo_type="dataset",
-            local_dir="data"
+            #local_dir="data"
+            local_dir="/tmp"
         )
 
-
-    df = pd.read_parquet(DATA_PATH)
+    cols = ["GENEINFO", "CHROM", "POS", "REF", "ALT", "CLNSIG", "CLNVC", "CLNDN"]
+    df = pd.read_parquet(DATA_PATH, columns=cols)
 
     # Extract the gene name GENEINFO > "OR4F5:79501" > "OR4F5"
     df['GENE'] = df['GENEINFO'].str.split(':').str[0]
